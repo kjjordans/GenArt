@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "genart"
+version = "0.1.0"
+description = "Generative pen-plotter art toolbox: algorithms, image preprocessing, and plotter rendering."
+readme = "readme.md"
+requires-python = ">=3.11"
+license = "MIT"
+authors = [{ name = "kjjordans" }]
+dependencies = [
+    "numpy>=1.25",
+    "vsketch>=1.2",
+    "vpype>=1.15",
+    "pillow>=10",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff>=0.5",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/plotter_art"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
