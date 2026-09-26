@@ -1,0 +1,45 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyd
+*.pyo
+*.egg-info/
+.pytest_cache/
+
+# Virtual environments
+.venv/
+venv/
+env/
+# On Windows, you may also have 'Scripts' or 'bin' folders directly in your project root
+# env/Scripts/
+
+# Distribution / packaging
+.Python
+build/
+dist/
+develop-eggs/
+sdist/
+var/
+wheels/
+*.egg
+*.whl
+
+# Editors
+.vscode/ # VS Code configuration
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# Logs and databases
+*.log
+*.sqlite3
+*.db
+
+# OS generated files
+
+Thumbs.db # Windows
