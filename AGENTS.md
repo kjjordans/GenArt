@@ -15,4 +15,4 @@ Lint: ruff (line-length=100). Test: pytest.
 
 ## Session Log
 
-- 2026-09-26: Initial project review; created AGENTS.md with conventions
+Session notes are kept in `notes/session_log.md`.
