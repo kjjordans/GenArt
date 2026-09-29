@@ -1,4 +1,5 @@
-**GENERATIVE PEN-PLOTTER ART**
+
+# GENERATIVE PEN-PLOTTER ART
 
 Learning plan and modular project guide
 
@@ -21,6 +22,7 @@ This project is a practical learning programme and an evolving codebase. Each st
 - Start with compact studies, then combine methods into hybrid works.
 - Design for physical plotting: bounded complexity, sensible line spacing and test plots before long runs.
 - Treat image preprocessing as a source of fields, masks, contours and sampling density, not merely photo tracing.
+
 ### Definition of done for each study
 
 - A clear visual question or target.
@@ -28,6 +30,7 @@ This project is a practical learning programme and an evolving codebase. Each st
 - An SVG preview and a small physical test plot.
 - Short notes on what worked, failed and should become reusable.
 - At least one extraction into the toolbox when the code has reuse value.
+
 ## 2. Toolbox architecture
 
 The architecture separates reusable geometry and algorithms from artwork-specific decisions. Begin lightly. Add abstractions only after two or more sketches need them.
@@ -106,6 +109,7 @@ Image preprocessing should be learned alongside generative geometry. The aim is 
 - Brightness-weighted stippling using rejection sampling, then Poisson-disc or centroidal Voronoi refinement.
 - Gradient direction to locally oriented hatching.
 - Image-conditioned flow fields and particles.
+
 ## 5. First twelve studies
 
 | # | Study | Primary lesson | Reusable output |
@@ -159,6 +163,7 @@ seed | date | sketch version | paper | pen | page size | parameters | SVG path c
 - Keep machine-specific GRBL settings and sender configuration outside reusable algorithms.
 - Use vpype as the final geometry sanitation stage, while retaining an unoptimised SVG for debugging.
 - Add smoke tests for deterministic output, finite coordinates and page-bound compliance.
+
 ### Dependencies to introduce only when needed
 
 | Purpose | Likely package |
@@ -191,6 +196,7 @@ Begin with Study 01 and Study 02. Do not build the complete folder tree on day o
 - A spacing ladder, line-width/pen test and curves at several speeds.
 - One known-good SVG and corresponding GRBL G-code.
 - Documented machine origin, page placement and sender settings.
+
 ### Study 02 acceptance criteria
 
 - A rosette generated from an explicit parametric function.
@@ -198,6 +204,7 @@ Begin with Study 01 and Study 02. Do not build the complete folder tree on day o
 - A fixed seed when jitter/noise is enabled.
 - No geometry outside the safe plotting bounds.
 - A small physical test and a short note describing aliasing, overdraw and useful parameter ranges.
+
 ## 10. Backlog of later topics
 
 Keep this as a discovery list rather than a commitment: Fourier epicycles, differential line growth, reaction–diffusion, wave-function collapse, Truchet tiles, Penrose and aperiodic tilings, graph drawing, TSP stippling, maze generation, signed-distance fields, ray marching in 2D, moiré systems, weaving patterns, procedural maps, typography, data-driven drawing, hidden-line removal, multi-pen registration and plot interruption recovery.

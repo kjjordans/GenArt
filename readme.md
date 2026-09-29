@@ -1,11 +1,8 @@
 # Generative Pen-Plotter Art Toolbox
 
-
 A modular Python project for learning and combining generative-art algorithms, image preprocessing, and plotter-oriented rendering. The primary workflow uses **vsketch** for interactive sketches and SVG generation, **vpype** for path processing, and a custom plotter that accepts **GRBL G-code**.
 
-
 ## Project goals
-
 
 - Learn algorithms through small, finished plotter studies.
 
@@ -17,9 +14,7 @@ A modular Python project for learning and combining generative-art algorithms, i
 
 - Make every result reproducible with explicit seeds and saved parameters.
 
-
 ## Proposed structure
-
 
 generative-plotter/
 
