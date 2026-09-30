@@ -15,6 +15,21 @@
 ### Preferences
 - **Code style:** Keep code readable by an intermediate programmer. Avoid premature abstraction and clever patterns unless they add clear utility.
 
+---
+
+## 2026-09-30
+
+### Completed
+- Added code style preference to AGENTS.md and session log
+- **Study 03: Harmonograph** — dual-pendulum damped harmonograph with frequency, phase, amplitude, damping, sample count, and dt parameters
+  - Removed no-op `1.0 *` factors
+  - Phases converted to degrees with `math.radians()`
+  - Removed `reloop` from finalize (harmless but unnecessary for open spiral)
+  - Ruff clean
+- Decided against extracting `sample_parametric` helper — not enough utility yet (preference: no premature abstraction)
+
 ### Pending for next session
-- Run ruff check on rosette sketch
-- Next study: Study 04 — disturbed grid
+- **Study 04: Disturbed grid** (Vera Molnár–style)
+  - Grid of squares with seeded jitter (position, rotation, scale)
+  - Finalize shape choice (square/circle/diamond)
+  - Decide whether to start with position-only jitter or all three
