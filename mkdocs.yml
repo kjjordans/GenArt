@@ -1,0 +1,54 @@
+site_name: Generative Art Vault
+site_description: Research notes on generative art algorithms, artists, techniques, and code experiments
+repo_url: https://github.com/kjjordans/GenArt
+edit_uri: edit/main/docs/
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.top
+    - navigation.indexes
+    - content.code.copy
+    - content.code.annotate
+    - search.highlight
+    - search.suggest
+  palette:
+    - scheme: slate
+      primary: indigo
+      accent: deep purple
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: true
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.critic
+  - pymdownx.caret
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.tilde
+  - attr_list
+  - md_in_html
+  - footnotes
+  - def_list
+  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+plugins:
+  - search
+  - tags:
+      tags_file: tags.md
+  - git-revision-date-localized:
+      enable_creation_date: true
+
+extra:
+  generator: false
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/kjjordans
+
+copyright: Copyright &copy; Joe
