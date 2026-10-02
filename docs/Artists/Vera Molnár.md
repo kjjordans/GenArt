@@ -107,8 +107,8 @@ approaches to music.[2]
 ### *Interruptions* (1968–69)
 
 <figure markdown>
-  ![Interruptions à recouvrements (1969) — computer-generated line art](https://upload.wikimedia.org/wikipedia/commons/c/c1/Vera_Molnar._Interruptions_%C3%A0_recouvrements%E2%80%9D_from_1969.jpg){ width=500 }
-  <figcaption>*Interruptions à recouvrements*, 1969. Computer-generated line art. [CC0](https://commons.wikimedia.org/wiki/File:Vera_Molnar._Interruptions_%C3%A0_recouvrements%E2%80%9D_from_1969.jpg) — Spalter Digital Art Collection.</figcaption>
+  ![Interruptions (1969) — plotter drawing](../images/molnar/interruptions-1969.jpg){ width=500 }
+  <figcaption>*Interruptions*, 1969. Plotter drawing, black ink on paper. [V&A collection (E.269-2011)](https://collections.vam.ac.uk/item/O1193775/interruptions-drawing-molnar-vera/).</figcaption>
 </figure>
 
 Fields of short lines in which the orientation varies slightly and a few are
@@ -122,16 +122,33 @@ drawings, produced using a computer program of her own devising.[6]
 - [National Gallery of Art, Washington D.C.](https://www.nga.gov/artworks/216160-interruptions) — computer drawing in black ink on Benson plotter paper
 - [The Morgan Library & Museum](https://www.themorgan.org/drawings/item/405692) — created with a Benson plotter, black ink, 1968
 
-### *(Dés)Ordres* (*Disorder* / *Structure of Squares*, 1974)
+### *(Dés)Ordres* (*Disorder*, 1974)
+
+<figure markdown>
+  ![(Dés)Ordres (1974) — plotter drawing with concentric squares](../images/molnar/desordres-1974.jpg){ width=400 }
+  <figcaption>*(Dés)Ordres*, 1974. Plotter drawing, concentric squares with random perturbation. [V&A collection (E.271-2011)](https://collections.vam.ac.uk/item/O1193781/desordres-drawing-molnar-vera/).</figcaption>
+</figure>
 
 Concentric squares repeated with small random perturbations — "1% disorder"
-introduced into a regular grid.[4][3] The V&A collection includes both
-*(Dés)Ordres* and *Structure of Squares* (1974, plotter drawings).[3]
+introduced into a regular grid.[4][3] The title plays on the French double
+meaning of *désordres* (disorders) and *des ordres* (some orders).
 
-**View the original at:**
+### *Structure of Squares* (1974)
 
-- [V&A, London — *(Dés)Ordres* (E.271-2011)](https://collections.vam.ac.uk/item/O1193781/desordres-drawing-molnar-vera/) — 20×20 square grid, 1974
-- [V&A, London — *Structure of Squares* (E.270-2011)](https://collections.vam.ac.uk/item/O1193777/structures-of-squares-drawing-vera-molnar/) — plotter drawing, 1974
+<figure markdown>
+  ![Structure of Squares (1974) — plotter drawing with grid of nested squares](../images/molnar/structure-of-squares-1974.jpg){ width=500 }
+  <figcaption>*Structure of Squares*, 1974. Plotter drawing on Benson plotter paper — note "JOB FROM MOLNAR" header. [V&A collection (E.270-2011)](https://collections.vam.ac.uk/item/O1193777/structures-of-squares-drawing-vera-molnar/).</figcaption>
+</figure>
+
+A 5×5 grid of cells, each containing nested squares with algorithmically
+varied positions, sizes, and offsets.[3] The plotter paper still carries
+its tractor-feed holes and the job header "JOB FROM MOLNAR" — a material
+reminder of the mainframe era.
+
+**View more from this period at:**
+
+- [MoMA — *Molndrian* (1974)](https://www.moma.org/collection/works/417832) — plotter-drawn ink on paper
+- [MoMA — *2 Letter Ms (From the Cycle M As in Malevich)* (1961)](https://www.moma.org/collection/works/409640) — cut-and-pasted colored paper on board
 
 ### *Hommage à Barbaud* (1974)
 
@@ -144,11 +161,6 @@ to disorder.[2]
 Algorithmic morphing of line segments — a form repeated with progressive
 random disruption. Her first solo exhibition, also titled *Transformations*,
 was held in 1976 at the gallery of the London Polytechnic.[1][6]
-
-**View related works at:**
-
-- [MoMA — *Molndrian* (1974)](https://www.moma.org/collection/works/417832) — plotter-drawn ink on paper
-- [MoMA — *2 Letter Ms (From the Cycle M As in Malevich)* (1961)](https://www.moma.org/collection/works/409640) — cut-and-pasted colored paper on board
 
 ### *Molnart* (1974–76)
 
