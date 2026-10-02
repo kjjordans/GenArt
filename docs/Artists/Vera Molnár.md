@@ -4,6 +4,11 @@ tags: [genart, artist, pioneer, computer-art, plotter, geometric-abstraction]
 
 # Vera Molnár (1924–2023)
 
+<figure markdown>
+  ![Vera Molnár in 1996](https://upload.wikimedia.org/wikipedia/commons/a/a1/Vera_Moln%C3%A1r_%281996%29.png){ width=300 }
+  <figcaption>Vera Molnár in 1996. Photo by Pantalaskas, [CC BY-SA 3.0](https://commons.wikimedia.org/wiki/File:Vera_Moln%C3%A1r_(1996).png).</figcaption>
+</figure>
+
 Hungarian-born French artist, pioneer of computer-generated and generative art.
 One of the first women to use computers in fine art practice. Lived and worked
 in Paris from 1947 until her death in December 2023, a month short of her
@@ -70,6 +75,11 @@ She died on 7 December 2023 in Paris.[1] The Centre Pompidou retrospective
 **Parler à l'œil** (Speaking to the Eye), planned for her centenary, opened
 on 28 February 2024 and ran through 26 August 2024.[4][8]
 
+<figure markdown>
+  ![Centre Pompidou retrospective entrance](https://upload.wikimedia.org/wikipedia/commons/9/93/Vernissage_molnar_centre_Pompidou_entree.jpg){ width=400 }
+  <figcaption>Entrance to *Parler à l'œil*, Centre Pompidou, 2024. [CC BY-SA 4.0](https://commons.wikimedia.org/wiki/File:Vernissage_molnar_centre_Pompidou_entree.jpg).</figcaption>
+</figure>
+
 ## The *machine imaginaire*
 
 The concept at the heart of Molnár's practice is the *machine imaginaire*
@@ -96,17 +106,32 @@ approaches to music.[2]
 
 ### *Interruptions* (1968–69)
 
+<figure markdown>
+  ![Interruptions à recouvrements (1969) — computer-generated line art](https://upload.wikimedia.org/wikipedia/commons/c/c1/Vera_Molnar._Interruptions_%C3%A0_recouvrements%E2%80%9D_from_1969.jpg){ width=500 }
+  <figcaption>*Interruptions à recouvrements*, 1969. Computer-generated line art. [CC0](https://commons.wikimedia.org/wiki/File:Vera_Molnar._Interruptions_%C3%A0_recouvrements%E2%80%9D_from_1969.jpg) — Spalter Digital Art Collection.</figcaption>
+</figure>
+
 Fields of short lines in which the orientation varies slightly and a few are
 missing — the untouched areas creating "interruptions" of white space.[4][6]
 These are among her earliest computer-generated images and plotter
-drawings, produced using a computer program of her own devising.[6] The V&A
-holds a copy in its collection.[3]
+drawings, produced using a computer program of her own devising.[6]
+
+**View the original at:**
+
+- [V&A, London (E.269-2011)](https://collections.vam.ac.uk/item/O1193775/interruptions-drawing-molnar-vera/) — plotter drawing, 1969
+- [National Gallery of Art, Washington D.C.](https://www.nga.gov/artworks/216160-interruptions) — computer drawing in black ink on Benson plotter paper
+- [The Morgan Library & Museum](https://www.themorgan.org/drawings/item/405692) — created with a Benson plotter, black ink, 1968
 
 ### *(Dés)Ordres* (*Disorder* / *Structure of Squares*, 1974)
 
 Concentric squares repeated with small random perturbations — "1% disorder"
 introduced into a regular grid.[4][3] The V&A collection includes both
 *(Dés)Ordres* and *Structure of Squares* (1974, plotter drawings).[3]
+
+**View the original at:**
+
+- [V&A, London — *(Dés)Ordres* (E.271-2011)](https://collections.vam.ac.uk/item/O1193781/desordres-drawing-molnar-vera/) — 20×20 square grid, 1974
+- [V&A, London — *Structure of Squares* (E.270-2011)](https://collections.vam.ac.uk/item/O1193777/structures-of-squares-drawing-vera-molnar/) — plotter drawing, 1974
 
 ### *Hommage à Barbaud* (1974)
 
@@ -119,6 +144,11 @@ to disorder.[2]
 Algorithmic morphing of line segments — a form repeated with progressive
 random disruption. Her first solo exhibition, also titled *Transformations*,
 was held in 1976 at the gallery of the London Polytechnic.[1][6]
+
+**View related works at:**
+
+- [MoMA — *Molndrian* (1974)](https://www.moma.org/collection/works/417832) — plotter-drawn ink on paper
+- [MoMA — *2 Letter Ms (From the Cycle M As in Malevich)* (1961)](https://www.moma.org/collection/works/409640) — cut-and-pasted colored paper on board
 
 ### *Molnart* (1974–76)
 
