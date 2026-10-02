@@ -3,7 +3,7 @@
 Profiles of generative and computational artists.
 
 ## To do
-- [ ] Vera Molnár
+- [x] [Vera Molnár](Vera%20Molnár.md)
 - [ ] Frieder Nake
 - [ ] Manfred Mohr
 - [ ] Georg Nees
