@@ -2,6 +2,8 @@
 
 A modular Python project for learning and combining generative-art algorithms, image preprocessing, and plotter-oriented rendering. The primary workflow uses **vsketch** for interactive sketches and SVG generation, **vpype** for path processing, and a custom plotter that accepts **GRBL G-code**.
 
+> **Status:** see [`notes/PROGRESS.md`](notes/PROGRESS.md) for current progress, what works, and open issues. The plan lives in [`study_plan.md`](study_plan.md).
+
 ## Project goals
 
 - Learn algorithms through small, finished plotter studies.
