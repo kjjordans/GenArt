@@ -9,6 +9,7 @@ __pycache__/
 
 # Virtual environments
 .venv/
+.venv-py5/
 venv/
 env/
 # On Windows, you may also have 'Scripts' or 'bin' folders directly in your project root
