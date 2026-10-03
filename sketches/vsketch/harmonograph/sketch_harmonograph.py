@@ -47,8 +47,8 @@ class HarmonographSketch(vsketch.SketchClass):
     amplitude_a = vsketch.Param(5.0)
     amplitude_b = vsketch.Param(5.0)    
     damping = vsketch.Param(0.01)
-    samples = vsketch.Param(1000)
-    dt = vsketch.Param(0.1)
+    samples = vsketch.Param(20000)
+    dt = vsketch.Param(0.005)
 
     def harmonograph_point(self, t: float) -> tuple[float, float]:
         x = (
