@@ -7,6 +7,7 @@ Maintained by Hermes alongside code experiments.
 
 - **[Artists](Artists/)**: Artist profiles — bio, key works, technique analysis
 - **[Algorithms](Algorithms/)**: Algorithm deep-dives with code sketches
+- **[Gallery](Gallery/)**: Selected plotter and Processing outputs
 - **[Inspirations](Inspirations/)**: Notable works, exhibitions, links
 - **[References](References/)**: Books, papers, tutorials
 - **[Journal](Journal/)**: Exploration log by date
