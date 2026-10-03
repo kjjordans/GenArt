@@ -21,11 +21,11 @@ N_ROWS = 6
 PADDING_MM = 5.0  # vsketch used 0.5 cm
 NESTS = 3
 NEST_SCALE = 0.75
-JITTER_POS = 0.1  # fraction of the cell pitch
-JITTER_ANGLE = 1.0  # degrees
-JITTER_SCALE = 1.0  # 1 = none, 1.1 or 0.9 = +/-10%
-SPREAD = 0.5  # bell width, as a fraction of the grid reach
-LAYERS = 1  # squares are assigned a random layer
+JITTER_POS = 0.06  # fraction of the cell pitch
+JITTER_ANGLE = 1.5  # degrees
+JITTER_SCALE = 1.0  # whole-nest size factor: 1 = none, 1.1 or 0.9 = +/-10%
+SPREAD = 0.7  # bell width, as a fraction of the grid reach
+LAYERS = 3  # squares are assigned a random layer (shows as colour on screen)
 
 OMIT_STEP = 0.2  # value the O key toggles between 0 and this
 SEED_INITIAL = 42
@@ -105,20 +105,23 @@ def compute_squares() -> list[tuple[float, float, float, float, float, int]]:
             # bell weight: 1 at the focus, falling off with distance
             w = math.exp(-((math.dist((cx, cy), ref) / sigma) ** 2))
 
+            # one size factor per cell, shared by every ring, so the whole
+            # nested block scales together (every ring reacts)
+            block_scale = 1.0 + rng.uniform(-amplitude * w, amplitude * w)
+
             for i in range(NESTS):
                 # draw all randoms before the omit roll, so changing `omit`
                 # only removes squares without moving the others
                 dx = rng.uniform(-offset * w, offset * w)
                 dy = rng.uniform(-offset * w, offset * w)
                 angle = rng.uniform(-JITTER_ANGLE * w, JITTER_ANGLE * w)
-                scale = 1.0 + rng.uniform(-amplitude * w, amplitude * w)
                 layer = rng.randint(1, LAYERS)
 
                 if rng.random() < omit:
                     continue
 
                 size = cell_w * NEST_SCALE**i
-                squares.append((cx + dx, cy + dy, angle, scale, size, layer))
+                squares.append((cx + dx, cy + dy, angle, block_scale, size, layer))
 
     return squares
 
