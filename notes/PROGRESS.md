@@ -16,7 +16,7 @@ Last updated: 2026-10-03
 
 ## Status
 
-- Stage 1–2 in progress. Studies 02, 03, 04 done; **Study 01 still pending**.
+- Stage 1–2 in progress. Studies 02, 03, 04 done. Study 01 (calibration) is out of scope here.
 - `src/plotter_art/**` is still empty (`__init__.py` only) — extraction deliberately deferred.
 - Sketches are split by tool: `sketches/vsketch/` (vsketch, `.venv`) and
   `sketches/processing/` (py5, `.venv-py5`).
@@ -57,14 +57,13 @@ Last updated: 2026-10-03
 - vsketch studies live in `sketches/vsketch/` (`.venv`); py5 studies live in
   `sketches/processing/` (`.venv-py5`).
 - The on-screen canvas may be magnified for display; SVG export stays exact page size.
+- Study 01 (plotter calibration) is out of scope for this environment; the user handles
+  physical calibration and plotting separately.
 
 ## Next
 
-1. Study 01 — plotter calibration sheet: page border, safe rectangle, spacing/pen/speed
-   ladder; one known-good SVG + GRBL G-code; document origin/placement/sender settings;
-   first physical test plot.
-2. Study 05 — recursive subdivision (BSP/quadtree).
-3. Processing image track — load / greyscale / threshold / contours in py5.
+1. Study 05 — recursive subdivision (BSP/quadtree).
+2. Processing image track — load / greyscale / threshold / contours in py5.
 
 ## Session log
 

@@ -60,6 +60,6 @@
   display-only and the export stays exact page size
 
 ### Pending
-- Study 01 — plotter calibration sheet and first physical test plot
+- Study 01 (plotter calibration) — handled outside this environment
 - Study 05 — recursive subdivision
 - Processing image track (Stage 4–5)
