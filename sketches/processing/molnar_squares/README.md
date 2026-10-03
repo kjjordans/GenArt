@@ -1,6 +1,6 @@
 # Molnár Squares — py5 (Processing) port
 
-An interactive port of `sketches/molnar_squares/` to [py5](https://py5coding.org/)
+An interactive port of `sketches/vsketch/molnar_squares/` to [py5](https://py5coding.org/)
 (Processing for Python 3). A grid of squares with concentric rings and seeded,
 focus-weighted disorder.
 
@@ -13,7 +13,7 @@ From the repository root:
 
 ```powershell
 python -m venv .venv-py5
-.venv-py5\Scripts\python -m pip install -r processing\requirements.txt
+.venv-py5\Scripts\python -m pip install -r sketches\processing\requirements.txt
 .venv-py5\Scripts\python -c "import jdk; print(jdk.install('21'))"
 ```
 
@@ -23,7 +23,7 @@ this once.
 ## Run
 
 ```powershell
-.venv-py5\Scripts\python processing\molnar_squares\molnar_squares.py
+.venv-py5\Scripts\python sketches\processing\molnar_squares\molnar_squares.py
 ```
 
 ## Controls

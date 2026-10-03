@@ -47,7 +47,9 @@ generative-plotter/
 │   ├── systems/        # walkers, particles, growth, automata
 │   ├── renderers/      # hatching, stippling, streamlines, contours
 │   └── utils/          # seeds, parameters, logging, file naming
-├── sketches/           # vsketch artworks and experiments
+├── sketches/           # finished studies, one folder per piece
+│   ├── vsketch/        #   vsketch artworks and experiments
+│   └── processing/     #   py5/Processing work (image, pixels, interaction)
 ├── assets/             # source images with licence/source notes
 ├── outputs/            # generated SVG/PNG/G-code, normally ignored
 ├── tests/

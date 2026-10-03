@@ -26,4 +26,8 @@ Session notes are kept in `notes/session_log.md`.
 ## Agent-specific notes
 
 - **Hermes art bot:** research and documentation only. Writing goes in `docs/`.
-- **OpenCode:** Focus on Coding. Focus on `src/`, `sketches/`, and `tests/`. 
+- **OpenCode:** Focus on Coding. Focus on `src/`, `sketches/`, and `tests/`.
+- **Sketch layout:** vsketch studies live in `sketches/vsketch/<name>/` and run
+  from `.venv`; py5/Processing studies live in `sketches/processing/<name>/` and
+  run from `.venv-py5`. Each sketch folder is self-contained with its own
+  `config/` and `output/`. 

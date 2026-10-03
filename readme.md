@@ -32,6 +32,8 @@ generative-plotter/
 │   ├── renderers/
 │   └── utils/
 ├── sketches/
+│   ├── vsketch/        # vsketch studies (run with .venv)
+│   └── processing/     # py5/Processing studies (run with .venv-py5)
 ├── assets/
 ├── outputs/
 ├── tests/

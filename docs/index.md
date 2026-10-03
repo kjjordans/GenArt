@@ -14,6 +14,7 @@ Maintained by Hermes alongside code experiments.
 ## About
 
 This vault lives in a git repo paired with generative art coding practice.
-The user writes code in `sketches/`; Hermes writes the documentation in
-`docs/`. Images from experiments are copied into `docs/images/` and
+The user writes code in `sketches/` (vsketch studies under `sketches/vsketch/`,
+py5/Processing studies under `sketches/processing/`); Hermes writes the
+documentation in `docs/`. Images from experiments are copied into `docs/images/` and
 referenced from the relevant notes.

@@ -5,7 +5,7 @@ Interactive: drag to move the bell focus; keyboard shortcuts for reseed,
 SVG export and toggling omission.
 
 Run with:
-    .venv-py5\\Scripts\\python processing\\molnar_squares\\molnar_squares.py
+    .venv-py5\\Scripts\\python sketches\\processing\\molnar_squares\\molnar_squares.py
 """
 
 import math
@@ -14,7 +14,7 @@ from pathlib import Path
 
 import py5
 
-# --- Parameters (mirrors sketches/molnar_squares/sketch_molnar_squares.py) ---
+# --- Parameters (mirrors sketches/vsketch/molnar_squares/sketch_molnar_squares.py) ---
 MARGIN_MM = 20.0  # vsketch used 2.0 cm
 N_COLS = 6
 N_ROWS = 6
