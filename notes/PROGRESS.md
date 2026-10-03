@@ -3,7 +3,7 @@
 Living project memory. Updated as work happens. Keep entries short and factual.
 Source of truth for the plan is `study_plan.md`; this file tracks **actual state**.
 
-Last updated: 2026-09-29
+Last updated: 2026-10-03
 
 ## How to use this file
 
@@ -14,39 +14,62 @@ Last updated: 2026-09-29
 - **Next** — the immediate queue.
 - **Session log** — append-only; newest at top.
 
-When something is resolved, move it out of "Doesn't work" and note the fix in the session log.
-
 ## Status
 
-- Phase: **Stage 0 — Foundation**. Scaffolding complete, no studies started.
-- Studies 01–12: **all pending**.
-- Package `plotter_art` imports; module subpackages exist but are empty (`__init__.py` only).
-- No sketches, outputs, or algorithm notes yet.
+- Stage 1–2 in progress. Studies 02, 03, 04 done; **Study 01 still pending**.
+- `src/plotter_art/**` is still empty (`__init__.py` only) — extraction deliberately deferred.
+- Sketches are split by tool: `sketches/vsketch/` (vsketch, `.venv`) and
+  `sketches/processing/` (py5, `.venv-py5`).
+- Docs site (MkDocs Material) is live at https://kjjordans.github.io/GenArt/ with a Gallery.
 
 ## Works
 
-- `pip`/venv setup via `.venv`.
-- `pytest` baseline: **2 passed** (`tests/test_smoke.py`) — verifies `plotter_art` imports and core deps (`numpy`, `PIL`, `vsketch`, `vpype`) import. (Verified 2026-09-29.)
-- Package layout scaffolded under `src/plotter_art/{geometry,transforms,fields,samplers,image,systems,renderers,utils}`.
-- Tooling declared in `pyproject.toml`: dependencies `numpy`, `vsketch`, `vpype`, `pillow`; dev extras `pytest`, `ruff`; pytest `testpaths=["tests"]`; ruff line-length 100.
+- `.venv` (Python 3.13) with vsketch 1.2, vpype, matplotlib, pytest, ruff.
+- `.venv-py5` with py5 0.10.11a0 and Java 21 (installed to `~/.jdk`).
+- `pytest` baseline (`tests/test_smoke.py`) passes.
+- Studies:
+  - 02 Rosette — `sketches/vsketch/rosette/`
+  - 03 Harmonograph — `sketches/vsketch/harmonograph/` (20k samples, smooth)
+  - 04 Molnár squares — `sketches/vsketch/molnar_squares/` plus the py5 port in
+    `sketches/processing/molnar_squares/`
+- `vsk save <sketch-dir> -s <seed> -d <output-dir>` produces a plot-ready SVG
+  (vpype cleanup via the sketch's `finalize`).
+- Docs deploy automatically from `docs/**` via `.github/workflows/deploy.yml`.
 
 ## Doesn't work / gotchas
 
-- Nothing broken yet. Add failures here as they happen, with the exact error and command.
+- `vsk.width` / `vsk.height` are always CSS pixels (793.7 x 1122.5 for A4) and are
+  **not** affected by `vsk.scale("cm")`. Convert with `* 2.54 / 96` before using as cm.
+- The vsketch viewer watches the sketch folder and locks it, so `git mv` of a running
+  sketch's folder fails with "Permission denied". Stop the viewer first.
+- `vsketch.Param` has no help/description field; the viewer shows only the name and unit.
+- py5 `pixel_density(2)` warns "not available for this display" on many monitors.
+- Windows environment variables set via `SetEnvironmentVariable` do not affect
+  already-open terminals.
 
 ## Decisions
 
 - Package/project name is `genart` (dir `GenArt`); import package is `plotter_art`.
-- Millimetres are the project-level physical unit (per `study_plan.md`).
-- Follow the "start lightly" rule: only add a module once two or more sketches need it.
+- Millimetres are the project-level physical unit.
+- "Start lightly": only add a module once two or more sketches need it. The grid/jitter
+  extraction is deferred until a second sketch needs it.
 - Randomness must come from an explicit seed; no hidden module-level random state.
+- vsketch studies live in `sketches/vsketch/` (`.venv`); py5 studies live in
+  `sketches/processing/` (`.venv-py5`).
+- The on-screen canvas may be magnified for display; SVG export stays exact page size.
 
 ## Next
 
-1. Study 01 — plotter calibration sheet: page border, safe plotting rectangle, spacing ladder, pen/speed test; one known-good SVG + GRBL G-code; document machine origin/placement/sender settings.
-2. Study 02 — parameterised rosette per `study_plan.md` §9 acceptance criteria.
-3. Add the first real modules only as studies need them (likely `utils` for seeding/page bounds, `geometry` for curve sampling).
+1. Study 01 — plotter calibration sheet: page border, safe rectangle, spacing/pen/speed
+   ladder; one known-good SVG + GRBL G-code; document origin/placement/sender settings;
+   first physical test plot.
+2. Study 05 — recursive subdivision (BSP/quadtree).
+3. Processing image track — load / greyscale / threshold / contours in py5.
 
 ## Session log
 
-- **2026-09-29** — Created this memory file. Inspected repo: scaffold + study plan only, studies not started. Ran `pytest` → 2 passed. No code changes other than adding this file.
+- **2026-10-03** — Studies 02–04 built; py5 port + `py5-parameter-window` skill; repo
+  split into `vsketch/` and `processing/`; docs Gallery live; harmonograph resampled.
+  Notes refreshed.
+- **2026-09-29** — Created this memory file. Inspected repo: scaffold + study plan only,
+  studies not started. Ran `pytest` -> 2 passed.
