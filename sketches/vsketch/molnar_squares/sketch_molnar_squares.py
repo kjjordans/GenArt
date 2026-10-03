@@ -19,14 +19,14 @@ class MolnarSquaresSketch(vsketch.SketchClass):
 
     # --- Jitter: maximum per-square variation, reached at the focus point ---
     # position offset as a fraction of the cell pitch (0 = none)
-    jitter_pos = vsketch.Param(0.1, min_value=0.0, max_value=1.0)
-    jitter_angle = vsketch.Param(1.0)  # max rotation in degrees
-    jitter_scale = vsketch.Param(1.0)  # size factor: 1 = none, 1.1 or 0.9 = +/-10%
+    jitter_pos = vsketch.Param(0.06, min_value=0.0, max_value=1.0)
+    jitter_angle = vsketch.Param(1.5)  # max rotation in degrees
+    jitter_scale = vsketch.Param(1.0)  # whole-nest size factor: 1 = none, 1.1 or 0.9 = +/-10%
 
     # --- Focus: the point the disorder is centred on ---
     focus_x = vsketch.Param(0.5, min_value=0.0, max_value=1.0)  # 0 = left edge, 1 = right
     focus_y = vsketch.Param(0.5, min_value=0.0, max_value=1.0)  # 0 = top edge, 1 = bottom
-    spread = vsketch.Param(0.5, min_value=0.05)  # bell width, as a fraction of grid reach
+    spread = vsketch.Param(0.7, min_value=0.05)  # bell width, as a fraction of grid reach
 
     # --- Layers & omission ---
     layers = vsketch.Param(1, min_value=1)  # squares are assigned a random layer
@@ -72,13 +72,16 @@ class MolnarSquaresSketch(vsketch.SketchClass):
                 # bell weight: 1 at the focus, falling off with distance
                 w = math.exp(-((math.dist((cx, cy), ref) / sigma) ** 2))
 
+                # one size factor per cell, shared by every ring, so the whole
+                # nested block scales together (every ring reacts)
+                block_scale = 1.0 + rng.uniform(-amplitude * w, amplitude * w)
+
                 for i in range(self.nests):
                     # draw all randoms before the omit roll, so changing `omit`
                     # only removes squares without moving the others
                     dx = rng.uniform(-offset * w, offset * w)
                     dy = rng.uniform(-offset * w, offset * w)
                     angle = rng.uniform(-self.jitter_angle * w, self.jitter_angle * w)
-                    scale = 1.0 + rng.uniform(-amplitude * w, amplitude * w)
                     layer = rng.randint(1, self.layers)
 
                     if rng.random() < self.omit:
@@ -92,7 +95,7 @@ class MolnarSquaresSketch(vsketch.SketchClass):
                     with vsk.pushMatrix():
                         vsk.translate(cx + dx, cy + dy)
                         vsk.rotate(angle, degrees=True)
-                        vsk.scale(scale)
+                        vsk.scale(block_scale)
                         vsk.rect(-size / 2, -size / 2, size, size)
 
     def finalize(self, vsk: vsketch.Vsketch) -> None:
