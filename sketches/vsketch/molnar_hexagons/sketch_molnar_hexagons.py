@@ -53,21 +53,27 @@ class MolnarHexagonsSketch(vsketch.SketchClass):
 
         usable_w = page_w - 2 * self.margin
         cell_w = (usable_w - (self.n_cols - 1) * self.padding) / self.n_cols
-        pitch = cell_w + self.padding
-        radius = cell_w / 2  # circumradius; a pointy-top hexagon is cell_w tall
+        pitch = cell_w + self.padding  # horizontal centre spacing
+
+        # pointy-top hexagons: width = sqrt(3)*R, height = 2R. Rows sit
+        # sqrt(3)/2 of the horizontal spacing apart so padding 0 tessellates.
+        radius = cell_w / math.sqrt(3)  # hexagon width == cell_w
+        hex_w = math.sqrt(3) * radius  # == cell_w
+        hex_h = 2 * radius
+        step_y = pitch * math.sqrt(3) / 2
 
         # grid extents (odd rows stick out by the row_offset) and the focus point
-        grid_w = (self.n_cols - 1) * pitch + cell_w + self.row_offset * pitch
-        grid_h = (self.n_rows - 1) * pitch + cell_w
+        grid_w = (self.n_cols - 1) * pitch + self.row_offset * pitch + hex_w
+        grid_h = (self.n_rows - 1) * step_y + hex_h
         x0, y0 = self.margin, self.margin
         ref = (x0 + self.focus_x * grid_w, y0 + self.focus_y * grid_h)
 
         # approximate farthest cell: the corners of the grid block
         corner_cells = [
-            (x0 + cell_w / 2, y0 + cell_w / 2),
-            (x0 + grid_w - cell_w / 2, y0 + cell_w / 2),
-            (x0 + cell_w / 2, y0 + grid_h - cell_w / 2),
-            (x0 + grid_w - cell_w / 2, y0 + grid_h - cell_w / 2),
+            (x0 + hex_w / 2, y0 + hex_h / 2),
+            (x0 + grid_w - hex_w / 2, y0 + hex_h / 2),
+            (x0 + hex_w / 2, y0 + grid_h - hex_h / 2),
+            (x0 + grid_w - hex_w / 2, y0 + grid_h - hex_h / 2),
         ]
         max_dist = max(math.dist(ref, c) for c in corner_cells)
         sigma = max(self.spread * max_dist, 1e-6)
@@ -80,8 +86,8 @@ class MolnarHexagonsSketch(vsketch.SketchClass):
         for row in range(self.n_rows):
             for col in range(self.n_cols):
                 # odd rows shift sideways so the grid interlocks (honeycomb)
-                cx = self.margin + col * pitch + (row % 2) * self.row_offset * pitch + cell_w / 2
-                cy = self.margin + row * pitch + cell_w / 2
+                cx = self.margin + col * pitch + (row % 2) * self.row_offset * pitch + hex_w / 2
+                cy = self.margin + row * step_y + hex_h / 2
 
                 # bell weight: 1 at the focus, falling off with distance
                 w = math.exp(-((math.dist((cx, cy), ref) / sigma) ** 2))
