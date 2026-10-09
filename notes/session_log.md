@@ -1,5 +1,30 @@
 # Session Log
 
+## 2026-10-09
+
+### Completed
+- **Study 05: Recursive subdivision** (`sketches/vsketch/recursive_subdivision/`)
+  - Panels modelled as point lists so cuts can be angled; each slice runs from the
+    longest edge into the panel at up to `max_tilt` degrees off perpendicular
+  - `exit_point()` ray test locates where the cut leaves the panel
+  - `stop_chance` lets sibling branches finish at different depths; `min_size` guards the
+    longest edge
+  - Moved the WIP from `sketches/recursive_subdivision/` into `sketches/vsketch/`
+  - Committed as `0cd89b7`
+- **Molnár hexagons** — nested-hexagon variant on an offset grid
+  (`sketches/vsketch/molnar_hexagons/`)
+
+### Decisions
+- The rectilinear/angled BSP look isn't a keeper aesthetically; the study is kept for its
+  reusable BSP + ray geometry, not as a finished piece
+- Vary a sketch's own `seed` with `--param seed N`; `vsk save -s` only seeds vsketch's RNG
+- p5.js hello-world left untracked as scratch; revisit only if p5js art makes sense
+
+### Pending
+- Next study: noise contour map (Stage 3) or the image track (Stage 4–5)
+
+---
+
 ## 2026-09-26
 
 ### Completed
