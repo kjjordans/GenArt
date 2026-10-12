@@ -3,7 +3,7 @@
 Living project memory. Updated as work happens. Keep entries short and factual.
 Source of truth for the plan is `study_plan.md`; this file tracks **actual state**.
 
-Last updated: 2026-10-03
+Last updated: 2026-10-12
 
 ## How to use this file
 
@@ -16,8 +16,8 @@ Last updated: 2026-10-03
 
 ## Status
 
-- Stage 1–2 in progress. Studies 02, 03, 04 done. Study 01 (calibration) is out of scope here.
-- `src/plotter_art/**` is still empty (`__init__.py` only) — extraction deliberately deferred.
+- Stage 1–3 in progress. Studies 02–04 and 06 done. Study 01 (calibration) is out of scope here.
+- First reusable module extracted: `plotter_art.geometry.contours` (marching squares).
 - Sketches are split by tool: `sketches/vsketch/` (vsketch, `.venv`) and
   `sketches/processing/` (py5, `.venv-py5`).
 - Docs site (MkDocs Material) is live at https://kjjordans.github.io/GenArt/ with a Gallery.
@@ -32,6 +32,8 @@ Last updated: 2026-10-03
   - 03 Harmonograph — `sketches/vsketch/harmonograph/` (20k samples, smooth)
   - 04 Molnár squares — `sketches/vsketch/molnar_squares/` plus the py5 port in
     `sketches/processing/molnar_squares/`
+  - 06 Marching squares — `sketches/vsketch/marching_squares/`; reusable module
+    `src/plotter_art/geometry/contours.py`
 - `vsk save <sketch-dir> -s <seed> -d <output-dir>` produces a plot-ready SVG
   (vpype cleanup via the sketch's `finalize`).
 - Docs deploy automatically from `docs/**` via `.github/workflows/deploy.yml`.
@@ -63,10 +65,14 @@ Last updated: 2026-10-03
 ## Next
 
 1. Study 05 — recursive subdivision (BSP/quadtree).
-2. Processing image track — load / greyscale / threshold / contours in py5.
+2. Study 07 — streamline field (vector fields and integration).
+3. Processing image track — load / greyscale / threshold / contours in py5.
 
 ## Session log
 
+- **2026-10-12** — Study 06 marching squares: smooth scalar field + marching-squares
+  contour extraction into `src/plotter_art/geometry/contours.py`; vsketch sketch with
+  per-layer contour levels, seed control, and configurable grid resolution. 5 tests pass.
 - **2026-10-03** — Studies 02–04 built; py5 port + `py5-parameter-window` skill; repo
   split into `vsketch/` and `processing/`; docs Gallery live; harmonograph resampled.
   Notes refreshed.
