@@ -106,3 +106,49 @@
 - Study 05 — recursive subdivision
 - Study 07 — streamline field
 - Processing image track (Stage 4–5)
+
+---
+
+## 2026-10-12 (cont.)
+
+### Completed
+- **py5 Support Library** (`src/plotter_art/py5_support/`)
+  - `PaperSpace` — physical page model with ISO A-series presets (A0–A6), portrait/landscape,
+    custom sizes in mm or cm, `cm()` conversion helper
+  - `Viewport` — screen preview fitting: page↔pixel transforms, page outline drawing,
+    preserves aspect ratio with configurable margins
+  - `ImageLayer` — raster image aligned to PaperSpace with `contain`/`cover`/`stretch` fit,
+    bilinear/nearest pixel sampling in page mm coordinates, py5 preview rendering
+  - `ParameterState` + `ParamDef` — typed parameter definitions, live slider state
+  - `build_controls()` — Tkinter slider window with value labels and action buttons
+  - `SVGExporter` / `export_sketch()` — plotter-ready SVG with mm dimensions and viewBox,
+    raster images excluded by default
+  - `run_sketch()` — two-window launcher: py5 canvas + Tkinter controls, clean lifecycle
+  - Lazy py5 imports in `__init__` so the package imports without py5 installed
+  - Tests: 33 passing (paperspace, viewport, controls)
+  - **Refactored py5 Hello World** (`sketches/py5/py5_hello_world/`) to use the library
+    demonstrating `ParameterState`, `PaperSpace`, `Viewport`, and `export_sketch()`
+  - Fixed `run_sketch()` callback registration: explicitly pass py5 `settings`/`setup`/`draw`
+    functions so the canvas uses its configured 900×700 size and the user draw callback runs
+  - Removed background fill from shared artwork/export callback so SVG contains only artwork
+  - Verified a py5 callback smoke test opens a 900×700 preview; Ruff clean, 33 tests pass
+- **Minimal py5 example** (`sketches/py5/minimal_example/minimal_example.py`)
+  - One PaperSpace, one radius slider, and one mm-based circle draw callback
+  - Ruff and Python compile checks pass
+- **py5 sketch template** (`sketches/py5/sketch_template.py`)
+  - Copyable starter with KEEP/CUSTOMIZE/OPTIONAL blocks, one example slider,
+    viewport-based mm drawing, shared launcher, and optional SVG export button
+  - Ruff and Python compile checks pass
+- Moved SVG save-dialog/button callback into `make_svg_export_callback()` in
+  `plotter_art.py5_support.svg_export`; template now declares the button using the helper
+
+### Decisions
+- Library stays small and needs-driven: add features only when a sketch needs them
+- py5 and vsketch environments remain separate (`.venv` / `.venv-py5`) to avoid dependency conflicts
+- `genart` package installed editable (`pip install -e . --no-deps`) in `.venv-py5` so sketches
+  can import `plotter_art` modules without manual path hacks
+
+### Pending
+- Image-processing/marching-squares sketch using `ImageLayer` to verify image↔geometry alignment
+- Additional paper presets beyond ISO A series if needed
+- Processing image track (Stage 4–5)

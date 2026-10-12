@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "sketches/py5"
+    }
+  ],
+  "settings": {
+    "python.defaultInterpreterPath": "${workspaceFolder}/../../.venv-py5/Scripts/python.exe",
+    "python.terminal.activateEnvironment": true
+  }
+}
