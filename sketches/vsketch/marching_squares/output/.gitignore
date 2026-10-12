@@ -1,0 +1,3 @@
+# Ignore generated outputs but keep the folder
+*
+!.gitignore

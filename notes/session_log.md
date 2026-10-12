@@ -84,7 +84,25 @@
 - The focus is a page fraction so the mouse maps directly; display magnification is
   display-only and the export stays exact page size
 
+## 2026-10-12
+
+### Completed
+- **Study 06: Marching squares** (`sketches/vsketch/marching_squares/`)
+  - Smooth scalar field built from seeded random sine waves (no extra dependencies)
+  - Classic marching-squares algorithm with linear edge interpolation
+  - Ambiguous saddle cases resolved via cell-centre average
+  - Extracted into reusable `src/plotter_art/geometry/contours.py`
+  - Sketch parameters: grid cols/rows, number of contour levels, seed, field scale, margin
+  - Contours drawn on separate vsketch layers for multi-pen plotting
+  - 5 tests pass (3 new + 2 smoke); ruff clean
+
+### Decisions
+- Extraction justified: Study 06 explicitly calls for "Scalar field + contours" as a
+  reusable module. Kept API minimal: one function, plain types.
+- Field generator stays in the sketch (not extracted) — only one sketch uses it and
+  sum-of-sines is easy to re-implement for different aesthetics.
+
 ### Pending
-- Study 01 (plotter calibration) — handled outside this environment
 - Study 05 — recursive subdivision
+- Study 07 — streamline field
 - Processing image track (Stage 4–5)

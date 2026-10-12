@@ -3,7 +3,7 @@
 Living project memory. Updated as work happens. Keep entries short and factual.
 Source of truth for the plan is `study_plan.md`; this file tracks **actual state**.
 
-Last updated: 2026-10-09
+Last updated: 2026-10-12
 
 ## How to use this file
 
@@ -16,9 +16,8 @@ Last updated: 2026-10-09
 
 ## Status
 
-- Stages 1–2 done (Studies 02–05). Stage 3 (fields & trajectories) is next. Study 01
-  (calibration) is out of scope here.
-- `src/plotter_art/**` is still empty (`__init__.py` only) — extraction deliberately deferred.
+- Stage 1–3 in progress. Studies 02–06 done. Study 01 (calibration) is out of scope here.
+- First reusable module extracted: `plotter_art.geometry.contours` (marching squares).
 - Sketches are split by tool: `sketches/vsketch/` (vsketch, `.venv`) and
   `sketches/processing/` (py5, `.venv-py5`).
 - Docs site (MkDocs Material) is live at https://kjjordans.github.io/GenArt/ with a Gallery.
@@ -37,6 +36,8 @@ Last updated: 2026-10-09
     offset/honeycomb grid)
   - 05 Recursive subdivision — `sketches/vsketch/recursive_subdivision/` (angled BSP cuts
     with uneven stopping)
+  - 06 Marching squares — `sketches/vsketch/marching_squares/`; reusable module
+    `src/plotter_art/geometry/contours.py`
 - `vsk save <sketch-dir> -d <output-dir>` produces a plot-ready SVG (vpype cleanup via the
   sketch's `finalize`). Vary a sketch's own `seed` Param with `--param seed N`;
   `-s/--seed` only seeds vsketch's built-in RNG, which this project's sketches don't use.
@@ -75,12 +76,14 @@ Last updated: 2026-10-09
 
 ## Next
 
-1. Study 06 — noise contour map (scalar fields + marching squares), **or**
-2. Image track (Stage 4–5) — load / greyscale / threshold / edge contours in py5.
-   Decision pending on which flavour to pursue next.
+1. Study 07 — streamline field (vector fields and integration).
+2. Processing image track — load / greyscale / threshold / contours in py5.
 
 ## Session log
 
+- **2026-10-12** — Study 06 marching squares: smooth scalar field + marching-squares
+  contour extraction into `src/plotter_art/geometry/contours.py`; vsketch sketch with
+  per-layer contour levels, seed control, and configurable grid resolution. 5 tests pass.
 - **2026-10-09** — Study 05 recursive subdivision built (angled slices, uneven stopping)
   and committed; Molnár hexagons variant noted; `vsk save -s` vs `--param seed` gotcha
   documented; recursive-subdivision style parked (not a keeper).
