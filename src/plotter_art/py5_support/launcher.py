@@ -66,6 +66,9 @@ def run_sketch(
         ...
         >>> run_sketch(page=page, draw=draw, state=state, params=params)
     """
+    if params and state is None:
+        raise ValueError("state is required when params are provided")
+
     viewport = Viewport.fit(page, canvas_w=canvas_w, canvas_h=canvas_h)
 
     # Store on the module for draw/setup access

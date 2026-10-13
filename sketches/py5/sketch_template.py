@@ -47,17 +47,17 @@ STATE = ParameterState.from_defs(PARAMS)
 # ---------------------------------------------------------------------------
 # CUSTOMIZE: Put your artwork here.
 # Keep this function free of background/window setup so it can draw both
-# in the preview and in the SVG. `target` is py5 or an SVG graphics target;
+# in the preview and in the SVG. `sketch` is py5 or an SVG graphics object;
 # all drawing coordinates and sizes are in millimetres.
 # ---------------------------------------------------------------------------
-def draw_art(target, page: PaperSpace, state: ParameterState) -> None:
+def draw_sketch(sketch, page: PaperSpace, state: ParameterState) -> None:
     """Draw the artwork in page-space millimetres."""
-    target.no_fill()
-    target.stroke(235)
-    target.stroke_weight(0.5)
+    sketch.no_fill()
+    sketch.stroke(235)
+    sketch.stroke_weight(0.5)
 
     radius = state.float("radius_mm")
-    target.ellipse(page.width_mm / 2, page.height_mm / 2, radius * 2, radius * 2)
+    sketch.ellipse(page.width_mm / 2, page.height_mm / 2, radius * 2, radius * 2)
 
 
 # ---------------------------------------------------------------------------
@@ -68,7 +68,7 @@ def draw_art(target, page: PaperSpace, state: ParameterState) -> None:
 BUTTONS = {
     "Export SVG": make_svg_export_callback(
         PAGE,
-        lambda target: draw_art(target, PAGE, STATE),
+        lambda sketch: draw_sketch(sketch, PAGE, STATE),
         OUTPUT_DIR,
         initial_filename=f"{SKETCH_NAME}.svg",
     ),
@@ -91,13 +91,13 @@ def draw() -> None:
     viewport.push_transform(py5)
 
     # Optional page boundary, visible in preview and included in SVG only if
-    # you also add it to draw_art().
+    # you also add it to draw_sketch().
     py5.no_fill()
     py5.stroke(100)
     py5.stroke_weight(0.4)
     py5.rect(0, 0, page.width_mm, page.height_mm)
 
-    draw_art(py5, page, state)
+    draw_sketch(py5, page, state)
     py5.pop_matrix()
 
 
