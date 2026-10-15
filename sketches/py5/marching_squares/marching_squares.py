@@ -9,7 +9,9 @@ Run from the project root with:
 # KEEP: Imports needed by the standard py5 sketch setup.
 # Add algorithm-specific imports below this block.
 # ---------------------------------------------------------------------------
+from collections.abc import Sequence
 from pathlib import Path
+
 import numpy as np
 import py5
 
@@ -23,6 +25,7 @@ from plotter_art.py5_support import (
     make_svg_export_callback,
     run_sketch,
 )
+from plotter_art.renderers import ContourStyle, DEFAULT_CONTOUR_STYLES
 
 # ---------------------------------------------------------------------------
 # CUSTOMIZE: Choose a paper size and orientation.
@@ -43,9 +46,13 @@ PARAMS = [
     ParamDef("margin", "Margin (mm)", 0, 80, 1, True, default=35),
     ParamDef("seed", "Seed", 0, 1000, 1, True, default=42),
     ParamDef("freq", "Noise Frequency", 0.01, 0.5, 0.01, False, default=0.1),
-    ParamDef("cols", "Columns", 1, 50, 1, True, default=10),
+    ParamDef("cols", "Columns", 1, 400, 1, True, default=100),
 ]
 STATE = ParameterState.from_defs(PARAMS)
+STATE.update("show_ellipses", 1)
+
+# Override this with a tuple of ContourStyle entries to customize this sketch.
+CONTOUR_STYLES = DEFAULT_CONTOUR_STYLES
 
 
 # ---------------------------------------------------------------------------
@@ -54,7 +61,93 @@ STATE = ParameterState.from_defs(PARAMS)
 # in the preview and in the SVG. `target` is py5 or an SVG graphics target;
 # all drawing coordinates and sizes are in millimetres.
 # ---------------------------------------------------------------------------
-def draw_sketch(sketch, page: PaperSpace, state: ParameterState) -> None:
+
+def edge_crossing(x1, y1, x2, y2, v1, v2, level):
+    """Calculate the crossing point of the edge between (x1, y1) and (x2, y2)
+    where the values v1 and v2 cross the given level."""
+    if (v1 >= level) == (v2 >= level):
+        return None
+
+    t = (level - v1) / (v2 - v1)
+    x_cross = x1 + t * (x2 - x1)
+    y_cross = y1 + t * (y2 - y1)
+    return x_cross, y_cross
+
+
+def draw_contours(sketch, xs, ys, values, level: float) -> None:
+    """Draw one marching-squares contour at *level*.
+
+    The caller sets the stroke colour before calling this function.
+    """
+    rows = values.shape[0] - 1
+    cols = values.shape[1] - 1
+
+    for row in range(rows):
+        for col in range(cols):
+            x0, y0 = xs[col], ys[row]
+            x1, y1 = xs[col + 1], ys[row + 1]
+
+            tl = values[row, col]
+            tr = values[row, col + 1]
+            br = values[row + 1, col + 1]
+            bl = values[row + 1, col]
+
+            case = (
+                int(tl >= level)
+                | (int(tr >= level) << 1)
+                | (int(br >= level) << 2)
+                | (int(bl >= level) << 3)
+            )
+
+            if case in (0, 15):
+                continue
+
+            crossings = []
+            p_top = edge_crossing(x0, y0, x1, y0, tl, tr, level)
+            p_right = edge_crossing(x1, y0, x1, y1, tr, br, level)
+            p_bottom = edge_crossing(x0, y1, x1, y1, bl, br, level)
+            p_left = edge_crossing(x0, y0, x0, y1, tl, bl, level)
+
+            if p_top is not None:
+                crossings.append(p_top)
+            if p_right is not None:
+                crossings.append(p_right)
+            if p_bottom is not None:
+                crossings.append(p_bottom)
+            if p_left is not None:
+                crossings.append(p_left)
+
+            if len(crossings) == 2:
+                p1, p2 = crossings
+                sketch.line(p1[0], p1[1], p2[0], p2[1])
+            elif len(crossings) == 4:
+                center_high = (tl + tr + br + bl) / 4 >= level
+
+                if case == 5:
+                    pairs = (
+                        ((0, 1), (2, 3))
+                        if center_high
+                        else ((0, 3), (1, 2))
+                    )
+                else:  # case == 10
+                    pairs = (
+                        ((0, 3), (1, 2))
+                        if center_high
+                        else ((0, 1), (2, 3))
+                    )
+
+                for first, second in pairs:
+                    p1 = crossings[first]
+                    p2 = crossings[second]
+                    sketch.line(p1[0], p1[1], p2[0], p2[1])
+
+
+def draw_sketch(
+    sketch,
+    page: PaperSpace,
+    state: ParameterState,
+    contour_styles: Sequence[ContourStyle] = DEFAULT_CONTOUR_STYLES,
+) -> None:
     """Draw the artwork in page-space millimetres."""
     sketch.no_fill()
     sketch.stroke(235)
@@ -77,16 +170,33 @@ def draw_sketch(sketch, page: PaperSpace, state: ParameterState) -> None:
     cell_width = (page.width_mm - 2 * margin) / (cols)
     cell_height = cell_width
 
-    
+    xs = [margin + col * cell_width for col in range(cols + 1)]
+    ys = [margin + row * cell_height for row in range(rows + 1)]
 
-    for row in range (rows + 1):
-        for col in range(cols + 1):
-            
-            x = margin + col * cell_width
-            y = margin + row * cell_height
-            val = py5.noise(x * freq, y * freq)
-            sketch.fill(255 * val)
-            sketch.ellipse(x, y, 3, 3)
+    values = np.empty((rows + 1, cols + 1), dtype=float)
+
+    # get the noise values for each grid point
+    for row, y in enumerate(ys):
+        for col, x in enumerate(xs):
+            values[row, col] = py5.noise(x * freq, y * freq)
+
+    if state.int("show_ellipses"):
+        sketch.no_stroke()
+        for row in range(rows + 1):
+            for col in range(cols + 1):
+
+                sketch.fill(255 * values[row, col])
+                sketch.ellipse(xs[col], ys[row], 1, 1)  
+    
+    
+    
+    for style in contour_styles:
+        sketch.stroke(*style.stroke_rgb)
+        sketch.stroke_weight(style.stroke_width_mm)
+        draw_contours(sketch, xs, ys, values, style.level)
+
+    # Display the grid points as small circles when the debug toggle is on.
+
 
 
 # ---------------------------------------------------------------------------
@@ -94,12 +204,47 @@ def draw_sketch(sketch, page: PaperSpace, state: ParameterState) -> None:
 # The library provides the file dialog and writes the SVG. The sketch only
 # supplies its artwork callback, page, and output location.
 # ---------------------------------------------------------------------------
+def toggle_ellipses() -> None:
+    """Toggle the temporary grid-point circles on or off."""
+    STATE.update("show_ellipses", 1 - STATE.int("show_ellipses"))
+
+
+def export_metadata() -> dict[str, object]:
+    """Return the current sketch configuration for its SVG sidecar."""
+    return {
+        "schema_version": 1,
+        "sketch_name": SKETCH_NAME,
+        "page": {
+            "name": PAGE.name,
+            "width_mm": PAGE.width_mm,
+            "height_mm": PAGE.height_mm,
+        },
+        "parameters": {
+            "margin_mm": STATE.float("margin"),
+            "seed": STATE.int("seed"),
+            "noise_coordinate_scale_per_mm": STATE.float("freq"),
+            "columns": STATE.int("cols"),
+            "show_ellipses": bool(STATE.int("show_ellipses")),
+        },
+        "contour_styles": [
+            {
+                "level": style.level,
+                "stroke_rgb": list(style.stroke_rgb),
+                "stroke_width_mm": style.stroke_width_mm,
+            }
+            for style in CONTOUR_STYLES
+        ],
+    }
+
+
 BUTTONS = {
+    "Toggle ellipses": toggle_ellipses,
     "Export SVG": make_svg_export_callback(
         PAGE,
-        lambda sketch: draw_sketch(sketch, PAGE, STATE),
+        lambda sketch: draw_sketch(sketch, PAGE, STATE, CONTOUR_STYLES),
         OUTPUT_DIR,
         initial_filename=f"{SKETCH_NAME}.svg",
+        metadata_fn=export_metadata,
     ),
 }
 
@@ -126,7 +271,7 @@ def draw() -> None:
     py5.stroke_weight(0.4)
     py5.rect(0, 0, page.width_mm, page.height_mm)
 
-    draw_sketch(py5, page, state)
+    draw_sketch(py5, page, state, CONTOUR_STYLES)
     py5.pop_matrix()
 
 

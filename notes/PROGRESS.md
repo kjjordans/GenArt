@@ -3,7 +3,7 @@
 Living project memory. Updated as work happens. Keep entries short and factual.
 Source of truth for the plan is `study_plan.md`; this file tracks **actual state**.
 
-Last updated: 2026-10-12
+Last updated: 2026-10-15
 
 ## How to use this file
 
@@ -18,6 +18,8 @@ Last updated: 2026-10-12
 
 - Stage 1–3 in progress. Studies 02–06 done. Study 01 (calibration) is out of scope here.
 - First reusable module extracted: `plotter_art.geometry.contours` (marching squares).
+- The py5 marching-squares study under `sketches/py5/marching_squares/` now draws seeded,
+  multi-level contours using page-space noise and library contour-style defaults.
 - Sketches are split by tool: `sketches/vsketch/` (vsketch, `.venv`) and
   `sketches/processing/` (py5, `.venv-py5`).
 - Docs site (MkDocs Material) is live at https://kjjordans.github.io/GenArt/ with a Gallery.
@@ -38,6 +40,9 @@ Last updated: 2026-10-12
     with uneven stopping)
   - 06 Marching squares — `sketches/vsketch/marching_squares/`; reusable module
     `src/plotter_art/geometry/contours.py`
+  - py5 marching-squares study — `sketches/py5/marching_squares/`; seeded page-space noise,
+    interpolated contour segments at multiple levels, color-coded strokes, and ellipse debug toggle.
+    `ContourStyle` defaults are in `plotter_art.renderers`; sketches can override them.
 - `vsk save <sketch-dir> -d <output-dir>` produces a plot-ready SVG (vpype cleanup via the
   sketch's `finalize`). Vary a sketch's own `seed` Param with `--param seed N`;
   `-s/--seed` only seeds vsketch's built-in RNG, which this project's sketches don't use.
@@ -64,6 +69,12 @@ Last updated: 2026-10-12
 - vsketch studies live in `sketches/vsketch/` (`.venv`); py5 studies live in
   `sketches/processing/` (`.venv-py5`).
 - The on-screen canvas may be magnified for display; SVG export stays exact page size.
+- For py5 noise contours, sampling `py5.noise(x_mm * frequency, y_mm * frequency)` ties the
+  field's feature scale to page coordinates; using `(col, row)` instead ties it to grid resolution.
+- SVG exports can create an optional same-basename JSON sidecar with sketch/page details, current
+  parameters, debug state, and effective contour styles. The preview background remains excluded.
+- A separate save/load configuration workflow is still wanted: save settings without an SVG and
+  load a saved config to reproduce a sketch.
 - Study 01 (plotter calibration) is out of scope for this environment; the user handles
   physical calibration and plotting separately.
 - Recursive subdivision models panels as point lists (not rectangles) so cuts can be
@@ -76,11 +87,24 @@ Last updated: 2026-10-12
 
 ## Next
 
-1. Study 07 — streamline field (vector fields and integration).
-2. Processing image track — load / greyscale / threshold / contours in py5.
+1. Add standalone config save/load, including restoring parameter values without exporting SVG.
+2. Stitch marching-squares segments into continuous polylines; validate py5 shape/vertices output
+   and measure pen-up travel.
+3. Evaluate optional vpype post-processing (`linemerge`, `linesort`) while preserving color layers,
+   page dimensions, and SVG units.
+4. Study 07 — streamline field (vector fields and integration).
+5. Processing image track — load / greyscale / threshold / contours in py5.
 
 ## Session log
 
+- **2026-10-15** — py5 marching-squares study now draws multiple seeded noise contours with
+  reusable/overridable `ContourStyle` defaults. Added optional SVG JSON sidecar metadata and a
+  focused test (not run). Recorded future config load/save, continuous polyline, and vpype
+  post-processing requests.
+- **2026-10-13** — Started the py5 marching-squares study with seeded page-space Perlin noise
+  preview and GUI controls; increased preview canvas to 1200×1200. Added a `run_sketch()` state
+  validation guard and test, updated template callback naming, and pushed commit `a504c3d`.
+  Tests were not run. Noted the desired SVG companion metadata file as a future task.
 - **2026-10-12** — Study 06 marching squares: smooth scalar field + marching-squares
   contour extraction into `src/plotter_art/geometry/contours.py`; vsketch sketch with
   per-layer contour levels, seed control, and configurable grid resolution. 5 tests pass.

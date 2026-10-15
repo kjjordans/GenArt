@@ -7,8 +7,9 @@ directly to mm.
 
 from __future__ import annotations
 
+import json
 import xml.etree.ElementTree as ET
-from collections.abc import Callable
+from collections.abc import Callable, Mapping
 from pathlib import Path
 
 import py5
@@ -43,6 +44,7 @@ class SVGExporter:
         *,
         stroke_colour: tuple[int, ...] = (0,),
         stroke_width_mm: float = 0.4,
+        metadata: Mapping[str, object] | None = None,
     ) -> Path:
         """Export geometry through *draw_fn* to an SVG file.
 
@@ -53,6 +55,8 @@ class SVGExporter:
             stroke_colour: Default stroke colour for the SVG group.
                 ``(gray,)`` or ``(r, g, b)``.
             stroke_width_mm: Default stroke width in mm.
+            metadata: Optional JSON-serializable export metadata. When provided,
+                it is written to a same-basename ``.json`` sidecar.
 
         Returns:
             The output path.
@@ -79,9 +83,24 @@ class SVGExporter:
 
         # Patch viewBox and physical dimensions on the generated SVG
         self._patch_svg(path)
+        if metadata is not None:
+            self._write_metadata(path, metadata)
 
         print(f"exported {path}")
         return path
+
+    @staticmethod
+    def _write_metadata(svg_path: Path, metadata: Mapping[str, object]) -> Path:
+        """Write export metadata beside *svg_path* and return the sidecar path."""
+        metadata_path = svg_path.with_suffix(".json")
+        payload = dict(metadata)
+        payload["svg_filename"] = svg_path.name
+
+        with metadata_path.open("w", encoding="utf-8") as metadata_file:
+            json.dump(payload, metadata_file, indent=2, sort_keys=True, ensure_ascii=False)
+            metadata_file.write("\n")
+
+        return metadata_path
 
     def _patch_svg(self, path: Path) -> None:
         """Inject viewBox and mm dimensions into the exported SVG.
@@ -109,6 +128,8 @@ def export_sketch(
     page: PaperSpace,
     draw_fn: Callable[[py5.Py5Graphics], None],
     path: str | Path,
+    *,
+    metadata: Mapping[str, object] | None = None,
     **kwargs,
 ) -> Path:
     """One-shot export convenience function.
@@ -117,6 +138,7 @@ def export_sketch(
         page: Physical page dimensions.
         draw_fn: Drawing callback receiving ``Py5Graphics``.
         path: Output file path.
+        metadata: Optional JSON-serializable metadata for a sidecar file.
         **kwargs: Extra options forwarded to ``SVGExporter.export``.
 
     Returns:
@@ -127,7 +149,7 @@ def export_sketch(
         >>> export_sketch(page, draw_art, "output/art.svg")
     """
     exporter = SVGExporter(page)
-    return exporter.export(draw_fn, path, **kwargs)
+    return exporter.export(draw_fn, path, metadata=metadata, **kwargs)
 
 
 def make_svg_export_callback(
@@ -137,6 +159,7 @@ def make_svg_export_callback(
     *,
     initial_filename: str = "sketch.svg",
     title: str = "Export sketch as SVG",
+    metadata_fn: Callable[[], Mapping[str, object]] | None = None,
 ) -> Callable[[], None]:
     """Create a button callback that asks for an SVG path and exports.
 
@@ -150,6 +173,7 @@ def make_svg_export_callback(
         output_dir: Initial directory shown in the save dialog.
         initial_filename: Suggested output filename.
         title: File-dialog title.
+        metadata_fn: Optional callback returning metadata at export time.
 
     Returns:
         A no-argument callback suitable for a Tkinter button.
@@ -168,6 +192,7 @@ def make_svg_export_callback(
             filetypes=[("SVG files", "*.svg")],
         )
         if path:
-            export_sketch(page, draw_fn, path)
+            metadata = metadata_fn() if metadata_fn is not None else None
+            export_sketch(page, draw_fn, path, metadata=metadata)
 
     return export_from_dialog

@@ -1,5 +1,60 @@
 # Session Log
 
+## 2026-10-15
+
+### Completed
+- **py5 marching squares** now samples a seeded page-space noise field and draws multiple
+  interpolated contour levels with distinct stroke colours. `ContourStyle` defaults live in
+  `src/plotter_art/renderers/` and can be overridden by a sketch.
+- Added an ellipse debug toggle; its state affects both preview and SVG export. The SVG itself
+  remains transparent because the preview background is not part of the artwork callback.
+- Added optional same-basename JSON metadata sidecars to the shared SVG exporter. The marching-
+  squares export records sketch/page information, current parameters, debug state, and effective
+  contour styles.
+- Added a focused sidecar-writing test. Tests and the py5 sketch were not run during this update.
+
+### Decisions / Learning
+- py5 has no dedicated polyline object/function; `begin_shape()` with `vertices()` and
+  `end_shape()` is the documented path-building route. Stitching cell segments into ordered paths
+  is still needed before that can reduce pen-up moves.
+- vpype provides a Python API and supports layer-wise `linemerge` and `linesort`; integration
+  should preserve colour/layer separation and physical page sizing.
+
+### Future Requests
+- Load a saved configuration to restore a sketch, and save a configuration independently of SVG.
+- Join marching-squares segments into continuous polylines; test py5 bulk vertices and actual SVG
+  / plotter pen-up behaviour.
+- Evaluate optional vpype post-processing during or after SVG export.
+
+---
+
+## 2026-10-13
+
+### Completed
+- **Started a py5 marching-squares study** (`sketches/py5/marching_squares/`)
+  - Noise field preview with GUI controls for margin, seed, frequency, and columns
+  - Noise is sampled in page-space mm; the viewport handles preview scaling
+  - Increased preview canvas to 1200×1200 px
+- `run_sketch()` now rejects slider parameters without a `ParameterState`; added a launcher test
+- Updated the py5 template callback naming to use `sketch` consistently
+- Committed and pushed as `a504c3d` (`feat(py5): add marching squares study and validate launcher state`)
+
+### Decisions / Learning
+- `py5.noise()` returns a scalar float; `py5.noise_seed(seed)` makes the field reproducible.
+- Sampling with page-space coordinates keeps noise feature size tied to physical page scale as
+  grid resolution changes. Sampling by row/column indices instead ties scale to the grid.
+- Current circles are temporary field-vertex diagnostics. A GUI toggle was discussed so they
+  can be disabled for SVG plotting; it is not implemented yet.
+
+### Pending
+- Build/store scalar values at grid vertices, then implement marching-squares classification,
+  interpolated edge crossings, segment assembly, and an explicit saddle-case rule.
+- Add a metadata sidecar exported beside each SVG, containing at least the sketch name and
+  parameter values (including seed); decide the file format/schema.
+- Run the new launcher test and broader test suite.
+
+---
+
 ## 2026-10-09
 
 ### Completed
