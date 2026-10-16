@@ -311,21 +311,8 @@ class ImageLayer:
         """
         # Build/update cached py5 image if needed
         if self._py5_image is None or not self._buffered:
-            # Convert grayscale 0..1 array to 0..255 uint8
-            arr_u8 = (self._array * 255).astype(np.uint8)
-            # py5 expects (w, h) for create_image and set_pixels
-            self._py5_image = py5_module.create_image(self._w, self._h, py5_module.GRAY)
-            # Flatten to 1D buffer for py5
-            flat = arr_u8.flatten()
-            self._py5_image.load_pixels()
-            # py5 pixels array is stored as ARGB ints for GRAY mode
-            # For GRAY mode, pixel values should be set as color()
-            # Let's use a simpler approach with RGB image
-            self._py5_image = py5_module.create_image(self._w, self._h, py5_module.RGB)
-            self._py5_image.load_pixels()
-            for i, val in enumerate(flat):
-                self._py5_image.pixels[i] = py5_module.color(val, val, val)
-            self._py5_image.update_pixels()
+            arr_u8 = np.rint(np.clip(self._array, 0.0, 1.0) * 255).astype(np.uint8)
+            self._py5_image = py5_module.create_image_from_numpy(arr_u8, "L")
             self._buffered = True
 
         py5_module.push_matrix()
