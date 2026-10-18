@@ -12,6 +12,7 @@ Lint: ruff (line-length=100). Test: pytest.
 - **Docstrings**: Google style (Args:, Returns:, Raises:)
 - **Testing**: pytest functions with plain asserts
 - **Commits**: Conventional commits (feat:, fix:, docs:, refactor:, etc.)
+- **Branching**: work directly on `main`; no feature branches unless requested
 - **Code style**: Keep code readable by an intermediate programmer. Avoid premature abstraction or clever patterns unless they add clear utility.
 - Python: follow pyproject.toml settings (ruff format, mypy typing)
 - Git commits: descriptive messages, one logical change per commit
