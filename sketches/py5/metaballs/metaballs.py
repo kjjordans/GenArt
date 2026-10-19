@@ -5,10 +5,11 @@ Run from the project root with:
 """
 
 import py5
+import numpy as np
 
-ROWS = 20
-COLS = 20
-SPACING = 20
+ROWS = 40
+COLS = 80
+SPACING = 10
 
 WIDTH = COLS * SPACING
 HEIGHT = ROWS * SPACING
@@ -51,18 +52,18 @@ class Ball:
 
 class Grid:
     def __init__(self, cols: int, rows: int, spacing: float) -> None:
-        self.cols = cols
-        self.rows = rows
+        self.cols = cols + 1
+        self.rows = rows + 1
         self.spacing = spacing
-        # TODO: add self.values -- 2D array of shape (rows, cols), e.g. numpy zeros.
-        # TODO: (optional) fill with a test pattern (checkerboard) first so the
-        #       array is actually visible while you debug.
+        self.values = np.zeros((rows + 1, cols + 1))  # 2D array of shape (rows, cols)
 
-    # TODO: add point_at(col, row) -> (x, y) using self.spacing, so show() and
-    #       the metaball field code share one coordinate formula.
-
+    def point_at(self, col: int, row: int) -> tuple[float, float]:
+        """Return the (x, y) coordinates of the grid point at (col, row)."""
+        x = col * self.spacing
+        y = row * self.spacing
+        return x, y
+    
     def show(self):
-        # TODO: guard with a self.visible flag (return when hidden) once show()/hide() exist.
         py5.stroke(255, 50)
         for i in range(self.cols):
             x = i * self.spacing
@@ -71,8 +72,27 @@ class Grid:
             y = j * self.spacing
             py5.line(0, y, py5.width, y)
 
-    # TODO: add a self.visible flag + hide() method; show() should no-op when hidden.
+    def metaball_values(self, balls: list[Ball]):
+        """Calculate the metaball values at each grid point based on the balls."""
+        for row in range(self.rows):
+            for col in range(self.cols):
+                x, y = self.point_at(col, row)
+                value = 0
+                for ball in balls:
+                    value += ball.r ** 2 / ((x - ball.x)**2 + (y - ball.y)**2)
+                self.values[row, col] = value
 
+    def display_values(self):
+        """Display the grid values as brightness on the screen."""
+        for row in range(self.rows):
+            for col in range(self.cols):
+                x, y = self.point_at(col, row)
+                brightness = py5.remap(self.values[row, col], 0, 1, 0, 255) 
+                
+                py5.fill(brightness,100)
+                py5.no_stroke()
+                py5.rect_mode(py5.CENTER)
+                py5.rect(x, y, self.spacing, self.spacing)
 
 
 
@@ -94,12 +114,19 @@ def setup() -> None:
     
 def draw() -> None:
     py5.background(0)
-
+    grid.show()
+    
     for ball in balls:
         ball.update()
         ball.show()
 
-    grid.show()  # TODO: move this before the ball loop so grid lines sit behind the balls
+    grid.metaball_values(balls)
+    grid.display_values()
+
+
+
+
+    
     # TODO: render grid.values (map values to brightness) so the array is visible
     # TODO: (after Grid works) metaball field -- for each grid point sum
     #       r / distance(point, ball), and fill points above a threshold to get blobs
